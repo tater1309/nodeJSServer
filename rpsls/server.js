@@ -1,5 +1,5 @@
 var http = require("http"),
-	server, userChoice, serverChoice, result;
+	server, userChoice, serverChoice, result,
 	score = {};
 
 //matrix holding possible outcomes
