@@ -79,3 +79,7 @@ main .gameButtons button {
   font-size: 1.3em;
 }
 
+#abc {
+	display: none;
+}
+

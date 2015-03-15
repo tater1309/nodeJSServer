@@ -5,27 +5,15 @@ var main = function() {
 		logon();
 	});
 
-	/*
-	$("#btnRock").click(function() {
-		processResults("/play/rock");
-	});
+	$("#btnNewPost").click(function() {
+		$("#abc").show();
+		$("#btnNewPost").hide();
+	})
 
-	$("#btnScissors").click(function() {
-		processResults("/play/scissors");
-	});
-
-	$("#btnPaper").click(function() {
-		processResults("/play/paper");
-	});
-
-	$("#btnLizard").click(function() {
-		processResults("/play/lizard");
-	});
-
-	$("#btnSpock").click(function() {
-		processResults("/play/spock");
-	});
-*/
+	$("#btnSubmitPost").click(function() {
+		$("#abc").hide();
+		$("#btnNewPost").show();
+	})
 }
 
 function logon() {
@@ -42,7 +30,7 @@ function logon() {
 		if (response.logon) {
 			var $newwelcome = $("<p>").html("Welcome " + username + "<br>");
 
-			$newwelcome.append($("<button>").attr('id', "btnNewPost").text("New Post"));
+			//$newwelcome.append($("<button>").attr('id', "btnNewPost").text("New Post"));
 			$("header .welcome").empty();
 			$("header .welcome").append($newwelcome);
 		}
