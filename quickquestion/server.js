@@ -1,3 +1,4 @@
+
 var http = require("http"),
 	express = require("express");
 
@@ -7,25 +8,44 @@ var users = [
 ];
 
 var allPosts = [];
-var post1 = new newPost("server", "Test Question 1", "Does this fill the array?", getTimeStamp());
-var post2 = new newPost("server", "Test Question 2", "Does this fill the array?", getTimeStamp());
+buildTestQuestions();
 
-allPosts.push(post1);
-allPosts.push(post2);
 
 //new post object constructor
-function newPost(username, title, question, timestamp) {
+function newPost(username, title, question, expires) {
 	this.username = username;
 	this.title = title;
 	this.question = question;
-	this.timestamp = timestamp;
+	this.expires = expires;
+	this.answers = [];
+}
+
+//new answer object constructor
+function newAnswer(username, answer) {
+	this.username = username;
+	this.answer = answer;
 }
 
 //get timestamp
-function getTimeStamp() {
-	Date.now = function now() {
-		return new Date().getTime();
-	}
+function getExpireTime() {
+	var expiretime, time;
+
+	time = new Date();
+	time = time.getTime();
+
+	//expires in 24 hours
+	expiretime = time + 86400000;
+	console.log("Added to server: " + time);
+	return expiretime;
+}
+
+//add questions to db for testing
+function buildTestQuestions() {
+	var post1 = new newPost("server", "Test Question 1", "Does this fill the array?", getExpireTime());
+	var post2 = new newPost("server", "Test Question 2", "Does this fill the array?", getExpireTime());
+
+	allPosts.push(post1);
+	allPosts.push(post2);
 }
 
 app = express();
@@ -33,9 +53,8 @@ http.createServer(app).listen(3000);
 
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
-//app.use(express.cookieParser());
-//app.use(express.session({secret: '1234567890QWERTY'}));
 
+//routing
 app.post("/userlogin", function (req,res) {
 	
 	var valid = false;
@@ -58,11 +77,10 @@ app.get("/displayQuestions", function (req, res) {
 });
 
 app.post("/newPost", function (req, res) {
-	console.log("inside new post");
 	var post, postinfo;
 
 	postinfo = req.body;
-	post = new newPost(postinfo.username, postinfo.title, postinfo.question, getTimeStamp());
+	post = new newPost(postinfo.username, postinfo.title, postinfo.question, getExpireTime());
 	allPosts.push(post);
 
 	res.json({"posted":true});

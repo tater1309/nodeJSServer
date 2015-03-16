@@ -1,6 +1,5 @@
-"use strict";
-
 var main = function() {
+	"use strict";
 	displayCurrentQuestions();
 
 	$("#btnLogon").click(function() {
@@ -50,14 +49,17 @@ function logon() {
 }
 
 function displayCurrentQuestions() {
+	var curtime, futuretime, timeleft, convertedtimeleft;
 	var $display = $("<p>");
 	$.getJSON("/displayQuestions", function (questionResponse){
 
 		questionResponse.forEach(function (question) {
-			$display.append($("<div>"));
+			convertedtimeleft = timeLeft(question.expires);
+			$display.append($("<div>").prop);
 			$display.append($("<h2>").html(question.title));
 			$display.append($("<h3>").html(" Posted By: " + question.username));
 			$display.append($("<p>").html("<br />" + question.question));
+			$display.append($("<p>").html("<br />Expires in: " + convertedtimeleft));
 			$display.append($("<button>").text("Answer"));
 			$display.append($("<br>"));
 			$display.append($("<hr>"));
@@ -82,6 +84,16 @@ function newPost() {
 			displayCurrentQuestions();
 		}
 	});
+}
+
+function timeLeft(futuretime) {
+	var curtime, timeleft, mydate, humandate;
+	curtime = new Date();
+	curtime = curtime.getTime();
+	timeleft = futuretime - curtime;
+	mydate = new Date(timeleft);
+	humandate = mydate.getUTCHours() + " hours, " + mydate.getUTCMinutes() + " minutes";
+	return humandate;
 }
 	
 $(document).ready(main);
