@@ -17,10 +17,15 @@
 
 			<div class="logon">
 				<p>
+					<input type="hidden" id="hiddenUN" />
 					Username: <input type="text" id="username" size="40" /><br>
 					Password: <input type="text" id="password" size="40" /><br>
 					<button id="btnLogon">Log In</button>
 				</p>
+			</div>
+
+			<div class="logoff">
+				<button id="btnLogoff">Log Off</button>
 			</div>
 
 			<div class="welcome">
@@ -29,25 +34,24 @@
 		</div>
 	</header>
 
-	<!-- popup form -->
-	<div id="abc">
-		<div id="popForm">
-			<hr>
-			<h2>New Post</h2>
-			<input id="title" placeholder="Title" type="text"><br>
-			<textarea id="question" name="question" placeholder="Question"></textarea>
-			<button id="btnSubmitPost">Submit</button>
-			<hr>
-			</form>
-		</div>
-	</div>
-
-	
-	<button id="btnNewPost">New Post</button>
-		
 	<main>
 		<div class="container">
-			<h2>Current Questions</h2>
+			<button id="btnNewPost">New Post</button>
+
+		<!-- popup form -->
+			<div id="popupform">
+				<hr>
+				<h2>New Post</h2>
+				<input id="title" placeholder="Title" type="text"><br>
+				<textarea id="question" name="question" placeholder="Question"></textarea>
+				<button id="btnSubmitPost">Submit</button>
+				<hr>
+			</div>
+			<div>
+				<h2>Current Questions</h2>
+				<button id="btnRefresh">Refresh</button>
+			</div>
+			<hr>
 			<div class="currentquestions">
 				<!-- AJAX will be placed here -->
 			</div>
