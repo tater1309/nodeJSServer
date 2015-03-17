@@ -1,6 +1,5 @@
-"use strict";
-
 var main = function() {
+	"use strict";
 	$("#btnRock").click(function() {
 		processResults("/play/rock");
 	});
@@ -20,7 +19,7 @@ var main = function() {
 	$("#btnSpock").click(function() {
 		processResults("/play/spock");
 	});
-}
+};
 
 function buildResults(response) {
 
