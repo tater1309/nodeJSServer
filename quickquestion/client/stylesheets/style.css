@@ -60,7 +60,7 @@ main h2 {
 	font-size: xx-large;
 }
 
-#popupform, #btnNewPost, .logoff, .answerbutton{
+#btnNewPost, .logoff, .answerbutton{
 	display: none;
 }
 

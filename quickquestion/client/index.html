@@ -4,24 +4,27 @@
 		<title>Quick Question</title>
 		<link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
 		<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+		<link rel="stylesheet" type="text/css" href="stylesheets/elements.css">
 		<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
 		<link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
 	</head>
-	<body>
+	<body style="overflow:hidden;">
 
 	<header>
 		<div class="container">
+
+			<!-- title area -->
 			<div class="title">
 				<h1>Quick Question</h1>
 			</div>
 
+			<!-- logon/logoff area -->
 			<div class="logon">
 				<p>
-					<h3 id="logonWelcome></h3>
-					<br />
+					<h3 id="logonWelcome">Welcome Guest</h3>
 					<input type="hidden" id="hiddenUN" />
-					Username: <input type="text" id="username"  /><br>
-					Password: <input type="text" id="password"  /><br>
+					<label>Username: </label><input type="text" id="username"  /><br>
+					<label>Password: </label><input type="text" id="password"  /><br>
 					<button id="btnLogon">Log In</button>
 				</p>
 			</div>
@@ -40,19 +43,29 @@
 		</div>
 	</header>
 
+
 	<main>
 		<div class="container">
 			
 
 		<!-- popup form -->
-			<div id="popupform">
-				<hr>
-				<h2>New Post</h2>
-				<input id="title" placeholder="Title" type="text"><br>
-				<textarea id="question" name="question" placeholder="Question"></textarea>
-				<button id="btnSubmitPost">Submit</button>
-				<hr>
+			<div id="abc">
+				<div id="popupform">
+					<form action="#" id="form" method="post" name="form">
+						<hr>
+						<h2>New Question</h2>
+						<input id="title" placeholder="Title" type="text"><br>
+						<textarea id="question" name="question" placeholder="Question"></textarea>
+						<a href="#" id="submit" class="formbutton">Post Question</a>
+						<a href="#" id="cancel" class="formbutton">Cancel</a>
+						<!--
+						<button id="btnSubmitPost" class="formbutton">Submit</button>
+						<button id="btnCancel" class="formbutton">Cancel</button>
+					-->
+					</form>
+				</div>
 			</div>
+
 			<div>
 				<h2>Current Questions</h2>
 				<button id="btnNewPost">New Post</button>

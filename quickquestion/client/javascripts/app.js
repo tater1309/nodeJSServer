@@ -12,12 +12,19 @@ var main = function() {
 	});
 
 	$("#btnNewPost").click(function() {
-		$("#popupform").show();
-		$("#btnNewPost").hide();
+		//make sure form fields are empty from previous use
+		$("#popupform #title").val("");
+		$("#popupform #question").val("");
+		$("#abc").show();
 	});
 
-	$("#btnSubmitPost").click(function() {
+	$("#popupform #submit").click(function() {
+		$("#abc").hide();
 		newPost();
+	});
+
+	$("#popupform #cancel").click(function() {
+		$("#abc").hide();
 	});
 
 	$("#btnRefresh").click(function() {
@@ -98,7 +105,6 @@ function displayCurrentQuestions() {
 function newPost() {
 	var username, title, question, postinfo;
 
-	$("#popupform").hide();
 	$("#btnNewPost").show();
 	username = $("#hiddenUN").val();
 	title = $("#popupform #title").val();
