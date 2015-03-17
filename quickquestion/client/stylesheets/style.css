@@ -74,10 +74,26 @@ main h2 {
 	color: blue;
 }
 
-.currentquestions button {
+.rightside button {
 	float: right;
 }
 
-.currentquestions .expires {
+.rightside .expires {
+	float: right;
+}
+
+.availablequestions {
+	width: 100%;
+	height: 125px;
+	border-bottom: solid;
+}
+
+.leftside {
+	width: 68%;
+	float: left;
+}
+
+.rightside {
+	width: 30%;
 	float: right;
 }

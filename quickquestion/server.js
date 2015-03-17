@@ -35,7 +35,7 @@ function getExpireTime() {
 
 	//expires in 24 hours
 	expiretime = time + 86400000;
-	console.log("Added to server: " + time);
+	//console.log("Added to server: " + time);
 	return expiretime;
 }
 

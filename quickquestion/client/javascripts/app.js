@@ -81,16 +81,7 @@ function displayCurrentQuestions() {
 	$.getJSON("/displayQuestions", function (questionResponse){
 
 		questionResponse.forEach(function (question) {
-			convertedtimeleft = timeLeft(question.expires);
-			$display.append($("<div>").prop);
-			$display.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft));
-			$display.append($("<h2>").html(question.title));
-			$display.append($("<h3>").html(" Posted By: " + question.username));
-			$display.append($("<button class='answerbutton'>").text("Add Answer"));
-			$display.append($("<p>").html("<br />" + question.question));
-			$display.append($("<br />"));
-			$display.append($("<hr>"));
-			$display.append($("<br />"));
+			$display.append(buildQuestionDisplay(question));
 		})
 		$("main .currentquestions").empty();
 		$("main .currentquestions").append($display);
@@ -100,6 +91,29 @@ function displayCurrentQuestions() {
 			$(".answerbutton").show();
 		}
 	})
+}
+
+function buildQuestionDisplay(question) {
+	var convertedtimeleft = timeLeft(question.expires);
+	var $questiondiv = $("<div class='availablequestions'>");
+	var $leftsidediv = $("<div class='leftside'>");
+	var $rightsidediv = $("<div class='rightside'>");
+
+	//build left side
+	$leftsidediv.append($("<h2>").html(question.title));
+	$leftsidediv.append($("<h3>").html(" Posted By: " + question.username));
+	$leftsidediv.append($("<p>").html("<br />" + question.question));
+
+	//build right side
+	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Answers: 0<br />"));
+	$rightsidediv.append($("<button class='answerbutton'>").text("Add Answer"));
+
+	//build question div
+	$questiondiv.append($rightsidediv);
+	$questiondiv.append($leftsidediv);
+	$questiondiv.append($("<br />"));
+	
+	return $questiondiv;
 }
 
 function newPost() {

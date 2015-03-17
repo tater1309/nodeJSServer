@@ -1,4 +1,9 @@
 <!doctype html>
+
+<!-- Popup form idea borrowed from:
+	http://www.formget.com/how-to-create-pop-up-contact-form-using-javascript/ 
+-->
+
 <html>
 	<head>
 		<title>Quick Question</title>
@@ -23,8 +28,8 @@
 				<p>
 					<h3 id="logonWelcome">Welcome Guest</h3>
 					<input type="hidden" id="hiddenUN" />
-					<label>Username: </label><input type="text" id="username"  /><br>
-					<label>Password: </label><input type="text" id="password"  /><br>
+					<input type="text" id="username" placeholder="Username" /><br>
+					<input type="text" id="password" placeholder="Password" /><br>
 					<button id="btnLogon">Log In</button>
 				</p>
 			</div>
@@ -48,7 +53,7 @@
 		<div class="container">
 			
 
-		<!-- popup form -->
+		<!-- new question popup form -->
 			<div id="abc">
 				<div id="popupform">
 					<form action="#" id="form" method="post" name="form">
@@ -58,13 +63,10 @@
 						<textarea id="question" name="question" placeholder="Question"></textarea>
 						<a href="#" id="submit" class="formbutton">Post Question</a>
 						<a href="#" id="cancel" class="formbutton">Cancel</a>
-						<!--
-						<button id="btnSubmitPost" class="formbutton">Submit</button>
-						<button id="btnCancel" class="formbutton">Cancel</button>
-					-->
 					</form>
 				</div>
 			</div>
+		<!-- end new question popup form -->
 
 			<div>
 				<h2>Current Questions</h2>
