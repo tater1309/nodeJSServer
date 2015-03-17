@@ -1,6 +1,6 @@
 var http = require("http"),
 	express = require("express"),
-	app, serverChoice, result,
+	server, app, userChoice, serverChoice, result,
 	score = {};
 
 //matrix holding possible outcomes
