@@ -29,23 +29,22 @@ function newAnswer(username, answer) {
 }
 
 //get timestamp
-function getExpireTime() {
+function getExpireTime(limit) {
 	var expiretime, time;
 
 	time = new Date();
 	time = time.getTime();
 
-	//expires in 24 hours
-	expiretime = time + 86400000;
+	expiretime = time + parseInt(limit);
 
 	return expiretime;
 }
 
 //add questions to db for testing
 function buildTestQuestions() {
-	var post1 = new newPost("server", "Test Question 1", "Does this fill the array?", getExpireTime(), questionid);
+	var post1 = new newPost("server", "Test Question 1", "Does this fill the array?", getExpireTime(86400000), questionid);
 	questionid++;
-	var post2 = new newPost("server", "Test Question 2", "Does this fill the array?", getExpireTime(), questionid);
+	var post2 = new newPost("server", "Test Question 2", "Does this fill the array?", getExpireTime(86400000), questionid);
 	questionid++;
 
 	allPosts.push(post1);
@@ -91,7 +90,7 @@ app.post("/newPost", function (req, res) {
 	var post, postinfo;
 
 	postinfo = req.body;
-	post = new newPost(postinfo.username, postinfo.title, postinfo.question, getExpireTime(), questionid);
+	post = new newPost(postinfo.username, postinfo.title, postinfo.question, getExpireTime(postinfo.expire), questionid);
 	questionid++;
 	allPosts.push(post);
 

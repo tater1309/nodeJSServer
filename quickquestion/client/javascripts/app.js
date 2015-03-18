@@ -42,12 +42,17 @@ function logoff() {
 }
 
 function displayCurrentQuestions() {
-	var curtime, futuretime, timeleft, convertedtimeleft;
+	//var curtime, futuretime, timeleft, convertedtimeleft;
 	var $display = $("<p>");
 	$.getJSON("/displayQuestions", function (questionResponse){
+		var curtime = new Date();
+		curtime = curtime.getTime();
 
 		questionResponse.forEach(function (question) {
-			$display.append(buildQuestionDisplay(question));
+			//console.log("Question " + question.questionid + " expire time: " + question.expires);
+			if (question.expires > curtime) {
+				$display.append(buildQuestionDisplay(question));
+			}
 		});
 		$("main .currentquestions").empty();
 		$("main .currentquestions").append($display);
@@ -90,12 +95,11 @@ function buildQuestionDisplay(question) {
 											value: question.questionid 
 											}));
 	$leftsidediv.append($("<h2>").html(question.title));
-	//$leftsidediv.append($("<h3>").html("Questionid: " + question.questionid));
 	$leftsidediv.append($("<h3>").html(" Posted By: " + question.username));
 	$leftsidediv.append($("<p>").html("<br />" + question.question));
 
 	//build right side
-	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Current Answers: " + answers.length));
+	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in:<br /> " + convertedtimeleft + "<br />Current Answers: " + answers.length));
 	$rightsidediv.append($("<button class='showanswer' id='btnshowanswer" + questionid + "' onclick='showAnswers(" + questionid+ ")'>").text("Show Answers"));
 	$rightsidediv.append($("<button class='hideanswer' id='btnhideanswer" + questionid + "' onclick='hideAnswers(" + questionid+ ")'>").text("Hide Answers"));
 	$rightsidediv.append($("<button class='addanswer' id='btnaddanswer" + questionid + "'onclick='showAnswerForm(" + questionid+ ")'>").text("Add Answer"));
@@ -122,13 +126,14 @@ function buildAnswerDisplay(answer) {
 }
 
 function newPost() {
-	var username, title, question, postinfo;
+	var username, title, question, expire, postinfo;
 
 	$("#btnNewPost").show();
 	username = $("#hiddenUN").val();
 	title = $("#popupform #title").val();
 	question = $("#popupform #question").val();
-	postinfo = {"username":username, "title":title, "question":question};
+	expire = $("#popupform input[type=radio]:checked").val();
+	postinfo = {"username":username, "title":title, "question":question, "expire": expire};
 
 	$.post("/newPost", postinfo, function(response) {
 		if (response.posted) {
@@ -157,7 +162,9 @@ function timeLeft(futuretime) {
 	curtime = curtime.getTime();
 	timeleft = futuretime - curtime;
 	mydate = new Date(timeleft);
-	humandate = mydate.getUTCHours() + " hours, " + mydate.getUTCMinutes() + " minutes";
+	humandate = mydate.getUTCHours() + " hours, " + 
+				mydate.getUTCMinutes() + " minutes, " +
+				mydate.getUTCSeconds() + " seconds";
 	return humandate;
 }
 

@@ -95,60 +95,40 @@ main h2 {
 }
 
 .rightside .expires {
-	float: right;
+	float: left;
 }
 
 .availablequestions {
 	display: inline-block;
 	width: 100%;
 	border-bottom: solid;
-	/*
-	border-style: solid;
-	border-width: 1px;
-	border-color: black;
-	*/
 }
 
 .leftside {
-	width: 68%;
+	width: 65%;
 	float: left;
 }
 
 .rightside {
-	width: 30%;
+	width: 32%;
 	float: right;
 }
 
 .questionwrapper {
 	display: inline-block;
 	width: 100%;
-	/*
-	border-style: solid;
-	border-width: 1px;
-	border-color: blue;
-	*/
 }
 
 .answerwrapper {
 	float: right;
 	display: none;
 	width: 80%;
-	/*
-	border-style: solid;
-	border-width: 1px;
-	border-color: red;
-	*/
 }
 
 .answerdiv {
 	display: inline-block;
 	width: 100%;
 	padding: 10px 0 10px 0;
-	/*
-	border-style: solid;
-	border-width: 1px;
-	border-color: purple;
-	*/
 }
 
 /* FOOTER */

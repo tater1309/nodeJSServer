@@ -61,8 +61,24 @@
 						<h2>New Question</h2>
 						<input id="title" placeholder="Title" type="text"><br>
 						<textarea id="question" name="question" placeholder="Question"></textarea>
-						<button type="button" id="PostSubmit">Post Question</button>
-						<button type="button" id="PostCancel">Cancel</button>
+						<fieldset id="expiretime">
+							<div id="radioleft">
+								<input type="radio" name="expire" value="120000">2 minutes<br />
+								<input type="radio" name="expire" value="300000">5 minutes<br />
+								<input type="radio" name="expire" value="600000">10 minutes<br />
+								<input type="radio" name="expire" value="1800000">30 minutes<br />
+							</div>
+							<div id="radioright">
+								<input type="radio" name="expire" value="3600000">1 hour<br />
+								<input type="radio" name="expire" value="21600000">6 hours<br />
+								<input type="radio" name="expire" value="43200000">12 hours<br />
+								<input type="radio" name="expire" value="86400000" checked>24 hours<br />
+							</div>
+						</fieldset>
+						<br />
+						<br />
+						<button type="button" class="formbutton" id="PostSubmit">Post Question</button>
+						<button type="button" class="formbutton" id="PostCancel">Cancel</button>
 					</form>
 				</div>
 			</div>
@@ -76,8 +92,8 @@
 						<h2>New Answer</h2>
 						<input type="hidden" id="hiddenqid" />
 						<textarea id="answer" name="answer"></textarea>
-						<button type="button" id="PostSubmit">Post Answer</button>
-						<button type="button" id="PostCancel">Cancel</button>
+						<button type="button" class="formbutton" id="PostSubmit">Post Answer</button>
+						<button type="button" class="formbutton" id="PostCancel">Cancel</button>
 					</form>
 				</div>
 			</div>
