@@ -14,6 +14,18 @@ background-color:#313131;
 overflow:auto
 }
 
+#xyz {
+width:100%;
+height:100%;
+opacity:.95;
+top:0;
+left:0;
+display:none;
+position:fixed;
+background-color:#313131;
+overflow:auto
+}
+
 img#close {
 position:absolute;
 right:-14px;
@@ -94,14 +106,3 @@ div#popupform span {
 color:red;
 font-weight:700
 }
-/*
-div#popupform button {
-width:10%;
-height:45px;
-border-radius:3px;
-background-color:#cd853f;
-color:#fff;
-font-family:'Raleway',sans-serif;
-font-size:18px;
-cursor:pointer
-}*/

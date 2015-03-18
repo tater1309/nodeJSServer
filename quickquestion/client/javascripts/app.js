@@ -1,37 +1,3 @@
-var main = function() {
-	"use strict";
-	$("#hiddenUN").val('')
-	displayCurrentQuestions();
-
-	$("#btnLogon").click(function() {
-		logon();
-	});
-	
-	$("#btnLogoff").click(function() {
-		logoff();
-	});
-
-	$("#btnNewPost").click(function() {
-		//make sure form fields are empty from previous use
-		$("#popupform #title").val("");
-		$("#popupform #question").val("");
-		$("#abc").show();
-	});
-
-	$("#popupform #submit").click(function() {
-		$("#abc").hide();
-		newPost();
-	});
-
-	$("#popupform #cancel").click(function() {
-		$("#abc").hide();
-	});
-
-	$("#btnRefresh").click(function() {
-		displayCurrentQuestions();
-	});
-}
-
 function logon() {
 	var username, password, userinfo;
 
@@ -47,7 +13,7 @@ function logon() {
 			
 			$(".logoff").show();
 			$("#btnNewPost").show();
-			$(".answerbutton").show();
+			$(".addanswer").show();
 
 			$("#hiddenUN").val(username);
 			var $newwelcome = $("<p>").html("Welcome " + username + "<br>");
@@ -67,7 +33,7 @@ function logoff() {
 	$(".logoff").hide();
 	
 	$("#btnNewPost").hide();
-	$(".answerbutton").hide();
+	$(".addanswer").hide();
 	
 	var $newwelcome = $("<p>").html("Welcome Guest<br>");
 
@@ -88,8 +54,10 @@ function displayCurrentQuestions() {
 		
 		//show answer button if a user is logged in
 		if ($("#hiddenUN").val() !== '') {
-			$(".answerbutton").show();
+			$(".addanswer").show();
 		}
+
+
 	})
 }
 
@@ -105,8 +73,9 @@ function buildQuestionDisplay(question) {
 	$leftsidediv.append($("<p>").html("<br />" + question.question));
 
 	//build right side
-	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Answers: 0<br />"));
-	$rightsidediv.append($("<button class='answerbutton'>").text("Add Answer"));
+	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Current Answers: 0"));
+	$rightsidediv.append($("<button class='showanswer' onclick='testFunction()'>").text("Show Answers"));
+	$rightsidediv.append($("<button class='addanswer' onclick='showAnswerForm()'>").text("Add Answer"));
 
 	//build question div
 	$questiondiv.append($rightsidediv);
@@ -114,6 +83,10 @@ function buildQuestionDisplay(question) {
 	$questiondiv.append($("<br />"));
 	
 	return $questiondiv;
+}
+
+function buildAnswerDisplay(answer) {
+
 }
 
 function newPost() {
@@ -140,6 +113,64 @@ function timeLeft(futuretime) {
 	mydate = new Date(timeleft);
 	humandate = mydate.getUTCHours() + " hours, " + mydate.getUTCMinutes() + " minutes";
 	return humandate;
+}
+
+function showAnswerForm() {
+	//make sure form fields are empty from previous use
+	$("#xyz #popupform #question").val("");
+	$("#xyz").show();
+}
+
+function testFunction() {
+	console.log ("pushed");
+}
+
+var main = function() {
+	"use strict";
+	$("#hiddenUN").val('')
+	displayCurrentQuestions();
+
+	/* Logon and Logoff */
+	$("#btnLogon").click(function() {
+		logon();
+	});
+	
+	$("#btnLogoff").click(function() {
+		logoff();
+	});
+	/*End Logon and Logoff */
+
+	/* New Question Form */
+	$("#btnNewPost").click(function() {
+		//make sure form fields are empty from previous use
+		$("#popupform #title").val("");
+		$("#popupform #question").val("");
+		$("#abc").show();
+	});
+
+	$("#abc #popupform #PostSubmit").click(function() {
+		$("#abc").hide();
+		newPost();
+	});
+
+	$("#abc #popupform #PostCancel").click(function() {
+		$("#abc").hide();
+	});
+	/* End New Question Form */
+
+	/* Add Answer Form */
+	$("#xyz #popupform #PostSubmit").click(function() {
+		$("#xyz").hide();
+	});
+
+	$("#xyz #popupform #PostCancel").click(function() {
+		$("#xyz").hide();
+	});
+	/* End Add Answer Form */
+
+	$("#btnRefresh").click(function() {
+		displayCurrentQuestions();
+	});
 }
 	
 $(document).ready(main);

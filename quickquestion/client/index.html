@@ -13,8 +13,8 @@
 		<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
 		<link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
 	</head>
-	<body style="overflow:hidden;">
-
+	<body>
+		<wrapper>
 	<header>
 		<div class="container">
 
@@ -61,12 +61,30 @@
 						<h2>New Question</h2>
 						<input id="title" placeholder="Title" type="text"><br>
 						<textarea id="question" name="question" placeholder="Question"></textarea>
-						<a href="#" id="submit" class="formbutton">Post Question</a>
-						<a href="#" id="cancel" class="formbutton">Cancel</a>
+						<button type="button" id="PostSubmit">Post Question</button>
+						<button type="button" id="PostCancel">Cancel</button>
+						<!--
+						<a href="" id="PostSubmit" class="formbutton">Post Question</a>
+						<a href="" id="PostCancel" class="formbutton">Cancel</a>
+						-->
 					</form>
 				</div>
 			</div>
 		<!-- end new question popup form -->
+
+		<!-- new question popup form -->
+			<div id="xyz">
+				<div id="popupform">
+					<form action="#" id="form" method="post" name="form">
+						<hr>
+						<h2>New Answer</h2>
+						<textarea id="question" name="question"></textarea>
+						<button type="button" id="PostSubmit">Post Answer</button>
+						<button type="button" id="PostCancel">Cancel</button>
+					</form>
+				</div>
+			</div>
+		<!-- end new question popup form -->	
 
 			<div>
 				<h2>Current Questions</h2>
@@ -84,6 +102,7 @@
 		<div class="container">
 		</div>
 	</footer>
+</wrapper>
 
 	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<script src="javascripts/app.js"></script>
