@@ -12,8 +12,6 @@ var allPosts = [];
 buildTestQuestions();
 buildTestAnswers(0);
 
-//console.log(allPosts[0].answers);
-
 //new post object constructor
 function newPost(username, title, question, expires, questionid) {
 	this.questionid = questionid;
@@ -97,6 +95,16 @@ app.post("/newPost", function (req, res) {
 	questionid++;
 	allPosts.push(post);
 
+	res.json({"posted":true});
+});
+
+app.post("/newAnswer", function (req, res) {
+	var answer, postinfo;
+
+	postinfo = req.body;
+	answer = new newAnswer(postinfo.username, postinfo.answer);
+	allPosts[postinfo.questionid].answers.push(answer);
+	
 	res.json({"posted":true});
 });
 

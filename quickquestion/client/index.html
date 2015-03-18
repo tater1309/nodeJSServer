@@ -63,28 +63,25 @@
 						<textarea id="question" name="question" placeholder="Question"></textarea>
 						<button type="button" id="PostSubmit">Post Question</button>
 						<button type="button" id="PostCancel">Cancel</button>
-						<!--
-						<a href="" id="PostSubmit" class="formbutton">Post Question</a>
-						<a href="" id="PostCancel" class="formbutton">Cancel</a>
-						-->
 					</form>
 				</div>
 			</div>
 		<!-- end new question popup form -->
 
-		<!-- new question popup form -->
+		<!-- new answer popup form -->
 			<div id="xyz">
 				<div id="popupform">
 					<form action="#" id="form" method="post" name="form">
 						<hr>
 						<h2>New Answer</h2>
-						<textarea id="question" name="question"></textarea>
+						<input type="hidden" id="hiddenqid" />
+						<textarea id="answer" name="answer"></textarea>
 						<button type="button" id="PostSubmit">Post Answer</button>
 						<button type="button" id="PostCancel">Cancel</button>
 					</form>
 				</div>
 			</div>
-		<!-- end new question popup form -->	
+		<!-- end new answer popup form -->	
 
 			<div>
 				<h2>Current Questions</h2>

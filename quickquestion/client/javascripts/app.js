@@ -84,7 +84,13 @@ function buildQuestionDisplay(question) {
 	});
 
 	//build left side
+	$leftsidediv.append($("<input />").attr({
+											type: "hidden", 
+											id: "questionid", 
+											value: question.questionid 
+											}));
 	$leftsidediv.append($("<h2>").html(question.title));
+	//$leftsidediv.append($("<h3>").html("Questionid: " + question.questionid));
 	$leftsidediv.append($("<h3>").html(" Posted By: " + question.username));
 	$leftsidediv.append($("<p>").html("<br />" + question.question));
 
@@ -92,7 +98,7 @@ function buildQuestionDisplay(question) {
 	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Current Answers: " + answers.length));
 	$rightsidediv.append($("<button class='showanswer' id='btnshowanswer" + questionid + "' onclick='showAnswers(" + questionid+ ")'>").text("Show Answers"));
 	$rightsidediv.append($("<button class='hideanswer' id='btnhideanswer" + questionid + "' onclick='hideAnswers(" + questionid+ ")'>").text("Hide Answers"));
-	$rightsidediv.append($("<button class='addanswer' onclick='showAnswerForm()'>").text("Add Answer"));
+	$rightsidediv.append($("<button class='addanswer' id='btnaddanswer" + questionid + "'onclick='showAnswerForm(" + questionid+ ")'>").text("Add Answer"));
 
 	//build question wrapper
 	$questionwrapper.append($rightsidediv);
@@ -131,6 +137,20 @@ function newPost() {
 	});
 }
 
+function newAnswer() {
+	var username, questionid, answer, postinfo;
+	username = $("#hiddenUN").val();
+	questionid = $("#hiddenqid").val();
+	answer = $("#popupform #answer").val();
+	postinfo = {"username": username, "questionid": questionid, "answer": answer};
+
+	$.post("/newAnswer", postinfo, function(response) {
+		if (response.posted) {
+			displayCurrentQuestions();
+		}
+	});
+}
+
 function timeLeft(futuretime) {
 	var curtime, timeleft, mydate, humandate;
 	curtime = new Date();
@@ -141,9 +161,10 @@ function timeLeft(futuretime) {
 	return humandate;
 }
 
-function showAnswerForm() {
+function showAnswerForm(questionid) {
 	//make sure form fields are empty from previous use
-	$("#xyz #popupform #question").val("");
+	$("#xyz #popupform #answer").val("");
+	$("#xyz #popupform #hiddenqid").val(questionid);
 	$("#xyz").show();
 }
 
@@ -195,6 +216,7 @@ var main = function() {
 	/* Add Answer Form */
 	$("#xyz #popupform #PostSubmit").click(function() {
 		$("#xyz").hide();
+		newAnswer();
 	});
 
 	$("#xyz #popupform #PostCancel").click(function() {
