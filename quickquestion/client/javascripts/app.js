@@ -52,10 +52,18 @@ function displayCurrentQuestions() {
 		$("main .currentquestions").empty();
 		$("main .currentquestions").append($display);
 		
-		//show answer button if a user is logged in
+		//show "add answer" button if a user is logged in
 		if ($("#hiddenUN").val() !== '') {
 			$(".addanswer").show();
 		}
+
+		//show "show answers" button if there are answers available
+		questionResponse.forEach(function (question) {
+			if (question.answers.length > 0) {
+				$("#btnshowanswer" + question.questionid).show();
+			}
+		});
+
 	});
 }
 
@@ -63,13 +71,14 @@ function buildQuestionDisplay(question) {
 	//get time left
 	var convertedtimeleft = timeLeft(question.expires);
 	var answers = question.answers;
+	var questionid = question.questionid;
 
 	var $questiondiv = $("<div class='availablequestions'>");
 	var $questionwrapper = $("<div class='questionwrapper'>");
 	var $leftsidediv = $("<div class='leftside'>");
 	var $rightsidediv = $("<div class='rightside'>");
-	var $answerwrapper = $("<div class='answerwrapper'>");
-
+	var $answerwrapper = $("<div class='answerwrapper' id='answerwrapper" + questionid + "'>");
+	
 	answers.forEach(function (answer) {
 		$answerwrapper.append(buildAnswerDisplay(answer));
 	});
@@ -81,7 +90,8 @@ function buildQuestionDisplay(question) {
 
 	//build right side
 	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Current Answers: " + answers.length));
-	$rightsidediv.append($("<button class='showanswer' onclick='testFunction()'>").text("Show Answers"));
+	$rightsidediv.append($("<button class='showanswer' id='btnshowanswer" + questionid + "' onclick='showAnswers(" + questionid+ ")'>").text("Show Answers"));
+	$rightsidediv.append($("<button class='hideanswer' id='btnhideanswer" + questionid + "' onclick='hideAnswers(" + questionid+ ")'>").text("Hide Answers"));
 	$rightsidediv.append($("<button class='addanswer' onclick='showAnswerForm()'>").text("Add Answer"));
 
 	//build question wrapper
@@ -137,8 +147,16 @@ function showAnswerForm() {
 	$("#xyz").show();
 }
 
-function testFunction() {
-	console.log ("pushed");
+function showAnswers(questionid) {
+	$("#btnshowanswer" + questionid).hide();
+	$("#btnhideanswer" + questionid).show();
+	$("#answerwrapper" + questionid).show();
+}
+
+function hideAnswers(questionid) {
+	$("#btnhideanswer" + questionid).hide();
+	$("#btnshowanswer" + questionid).show();
+	$("#answerwrapper" + questionid).hide();
 }
 
 var main = function() {

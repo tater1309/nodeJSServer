@@ -69,7 +69,7 @@ main h2 {
 	font-size: xx-large;
 }
 
-#btnNewPost, .logoff, .addanswer{
+#btnNewPost, .logoff, .addanswer, .showanswer, .hideanswer {
 	display: none;
 }
 
@@ -124,7 +124,10 @@ main h2 {
 
 .answerwrapper {
 	float: right;
+	/*
 	display: inline-block;
+	*/
+	display: none;
 	width: 80%;
 	border-style: solid;
 	border-width: 1px;
