@@ -48,14 +48,7 @@ function displayCurrentQuestions() {
 
 		questionResponse.forEach(function (question) {
 			$display.append(buildQuestionDisplay(question));
-			//console.log("Answer: " + question.answers);
-			question.answers.forEach(function (answers) {
-				console.log("Answers: " + answers);
-				console.log("Username: " + answers.username);
-				console.log("Answer: " + answers.answer);
-
-			})
-		})
+		});
 		$("main .currentquestions").empty();
 		$("main .currentquestions").append($display);
 		
@@ -63,14 +56,23 @@ function displayCurrentQuestions() {
 		if ($("#hiddenUN").val() !== '') {
 			$(".addanswer").show();
 		}
-	})
+	});
 }
 
 function buildQuestionDisplay(question) {
+	//get time left
 	var convertedtimeleft = timeLeft(question.expires);
+	var answers = question.answers;
+
 	var $questiondiv = $("<div class='availablequestions'>");
+	var $questionwrapper = $("<div class='questionwrapper'>");
 	var $leftsidediv = $("<div class='leftside'>");
 	var $rightsidediv = $("<div class='rightside'>");
+	var $answerwrapper = $("<div class='answerwrapper'>");
+
+	answers.forEach(function (answer) {
+		$answerwrapper.append(buildAnswerDisplay(answer));
+	});
 
 	//build left side
 	$leftsidediv.append($("<h2>").html(question.title));
@@ -78,20 +80,29 @@ function buildQuestionDisplay(question) {
 	$leftsidediv.append($("<p>").html("<br />" + question.question));
 
 	//build right side
-	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Current Answers: 0"));
+	$rightsidediv.append($("<p class='expires'>").html("<br />Expires in: " + convertedtimeleft + "<br />Current Answers: " + answers.length));
 	$rightsidediv.append($("<button class='showanswer' onclick='testFunction()'>").text("Show Answers"));
 	$rightsidediv.append($("<button class='addanswer' onclick='showAnswerForm()'>").text("Add Answer"));
 
+	//build question wrapper
+	$questionwrapper.append($rightsidediv);
+	$questionwrapper.append($leftsidediv);
+
 	//build question div
-	$questiondiv.append($rightsidediv);
-	$questiondiv.append($leftsidediv);
-	$questiondiv.append($("<br />"));
+	$questiondiv.append($questionwrapper);
+	$questiondiv.append($answerwrapper);
 	
 	return $questiondiv;
 }
 
 function buildAnswerDisplay(answer) {
+	var $answerdiv = $("<div class='answerdiv'>");
 
+	//build answer
+	$answerdiv.append($("<h3>").html("Posted By: " + answer.username));
+	$answerdiv.append($("<p>").html("<br />" + answer.answer));
+	
+	return $answerdiv;
 }
 
 function newPost() {
