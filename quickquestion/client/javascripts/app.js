@@ -48,6 +48,13 @@ function displayCurrentQuestions() {
 
 		questionResponse.forEach(function (question) {
 			$display.append(buildQuestionDisplay(question));
+			//console.log("Answer: " + question.answers);
+			question.answers.forEach(function (answers) {
+				console.log("Answers: " + answers);
+				console.log("Username: " + answers.username);
+				console.log("Answer: " + answers.answer);
+
+			})
 		})
 		$("main .currentquestions").empty();
 		$("main .currentquestions").append($display);
@@ -56,8 +63,6 @@ function displayCurrentQuestions() {
 		if ($("#hiddenUN").val() !== '') {
 			$(".addanswer").show();
 		}
-
-
 	})
 }
 

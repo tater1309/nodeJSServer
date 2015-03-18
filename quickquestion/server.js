@@ -10,7 +10,9 @@ var users = [
 var questionid = 0;
 var allPosts = [];
 buildTestQuestions();
+buildTestAnswers(0);
 
+//console.log(allPosts[0].answers);
 
 //new post object constructor
 function newPost(username, title, question, expires, questionid) {
@@ -24,7 +26,6 @@ function newPost(username, title, question, expires, questionid) {
 
 //new answer object constructor
 function newAnswer(username, answer) {
-	this.id = 0;
 	this.username = username;
 	this.answer = answer;
 }
@@ -51,6 +52,13 @@ function buildTestQuestions() {
 
 	allPosts.push(post1);
 	allPosts.push(post2);
+}
+
+function buildTestAnswers(questionid) {
+	var answer1 = new newAnswer("other", "Yes it does.");
+	var answer2 = new newAnswer("other", "No it doesn't.");
+	allPosts[questionid].answers.push(answer1);
+	allPosts[questionid].answers.push(answer2);
 }
 
 app = express();
