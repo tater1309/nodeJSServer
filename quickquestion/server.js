@@ -1,16 +1,25 @@
-
 var http = require("http"),
 	express = require("express");
 
-var users = [
-	["timothy", "test"],
-	["test", "test"]
-];
-
-var questionid = 0;
+//simulated databases
+var users = [];
 var allPosts = [];
+
+//variables
+var questionid = 0;
+
+//build testing data
+buildTestUsers();
 buildTestQuestions();
 buildTestAnswers(0);
+
+/* Constructors */
+//new registration constructor
+function newUser(username, password) {
+	this.username = username;
+	this.password = password;
+}
+
 
 //new post object constructor
 function newPost(username, title, question, expires, questionid) {
@@ -27,17 +36,17 @@ function newAnswer(username, answer) {
 	this.username = username;
 	this.answer = answer;
 }
+/* End constructors */
 
-//get timestamp
-function getExpireTime(limit) {
-	var expiretime, time;
 
-	time = new Date();
-	time = time.getTime();
+/* Testing functions */
+//add users to db for testing
+function buildTestUsers() {
+	var user1 = new newUser("test", "test");
+	var user2 = new newUser("timothy", "test");
 
-	expiretime = time + parseInt(limit);
-
-	return expiretime;
+	users.push(user1);
+	users.push(user2);
 }
 
 //add questions to db for testing
@@ -51,29 +60,67 @@ function buildTestQuestions() {
 	allPosts.push(post2);
 }
 
+//add answers to test question for testing
 function buildTestAnswers(questionid) {
 	var answer1 = new newAnswer("other", "Yes it does.");
 	var answer2 = new newAnswer("other", "No it doesn't.");
 	allPosts[questionid].answers.push(answer1);
 	allPosts[questionid].answers.push(answer2);
 }
+/* End testing functions */
 
+
+//get timestamp
+function getExpireTime(limit) {
+	var expiretime, time;
+
+	time = new Date();
+	time = time.getTime();
+
+	expiretime = time + parseInt(limit);
+
+	return expiretime;
+}
+
+//run server
 app = express();
 http.createServer(app).listen(3000);
 
+//allow for folder access
 app.use(express.static(__dirname + "/client"));
 app.use(express.urlencoded());
 
 //routing
+app.post("/registration", function (req,res) {
+	
+	var valid = true;
+	var reginfo = req.body;
+	var registration;
+
+	for (var i=0; i < users.length; i++) {
+		if (users[i].username === reginfo.username) {
+			valid = false;
+		}
+	}
+	if (valid === true) {
+		registration = new newUser(reginfo.username, reginfo.password);
+		users.push(registration);
+		res.json({"registration":true});
+	}
+	else {
+		res.json({"registration":false});
+	}
+});
+
 app.post("/userlogin", function (req,res) {
 	
 	var valid = false;
 	var userinfo = req.body;
-		for (var i=0; i < users.length; i++) {
-			if ((users[i][0] === userinfo.username) && (users[i][1] === userinfo.password)) {
-				valid = true;
-			}
+	for (var i=0; i < users.length; i++) {
+		if ((users[i].username === userinfo.username) && (users[i].password === userinfo.password)) {
+			valid = true;
 		}
+	}
 	if (valid === true) {
 		res.json({"logon":true});
 	}
