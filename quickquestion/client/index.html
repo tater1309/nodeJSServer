@@ -26,24 +26,21 @@
 			<!-- logon/logoff area -->
 			<div class="logon">
 				<p>
-					<h3 id="logonWelcome">Welcome Guest</h3>
+					<h3>Welcome Guest</h3>
 					<input type="hidden" id="hiddenUN" />
 					<input type="text" id="username" placeholder="Username" /><br>
-					<input type="text" id="password" placeholder="Password" /><br>
+					<input type="password" id="password" placeholder="Password" /><br>
 					<button id="btnLogon">Log In</button>
+					<button id="btnRegister">Register</button>
 				</p>
 			</div>
 
 			<div class="logoff">
 				<p>
-					<h3>Welcome Guest</h3>
+					<h3 id="logonWelcome">#</h3>
 					<br />
 					<button id="btnLogoff">Log Off</button>
 				</p>
-			</div>
-
-			<div class="welcome">
-				<p>Welcome Guest</p>
 			</div>
 		</div>
 	</header>
@@ -51,8 +48,25 @@
 
 	<main>
 		<div class="container">
-			
 
+		<!-- new registeration popup form -->
+			<div id="sss">
+				<div id="popupform">
+					<form action="#" id="form" method="post" name="form">
+						<hr>
+						<h2>Registration Form</h2>
+						<input id="regusername" placeholder="User Name" type="text"><br>
+						<input id="reg1stpassword" placeholder="Password" type="password"><br>
+						<input id="reg2ndpassword" placeholder="Re-enter Password" type="password"><br>
+                        <input id="regemail" placeholder="Email" type="text"><br><br>
+						
+						<button type="button" class="formbutton" id="PostSubmit">Register</button>
+						<button type="button" class="formbutton" id="PostCancel">Cancel</button>
+					</form>
+				</div>
+			</div>
+		<!-- end new registeration popup form -->
+			
 		<!-- new question popup form -->
 			<div id="abc">
 				<div id="popupform">

@@ -16,10 +16,10 @@ function logon() {
 			$(".addanswer").show();
 
 			$("#hiddenUN").val(username);
-			var $newwelcome = $("<p>").html("Welcome " + username + "<br>");
+			var $newwelcome = $("<h3>").html("Welcome " + username + "<br>");
 
-			$("header .welcome").empty();
-			$("header .welcome").append($newwelcome);
+			$(".logoff #logonWelcome").empty();
+			$(".logoff #logonWelcome").append($newwelcome);
 		}
 	});
 
@@ -28,28 +28,21 @@ function logon() {
 }
 
 function logoff() {
-	$("#hiddenUN").val('')
+	$("#hiddenUN").val("");
 	$(".logon").show();
 	$(".logoff").hide();
 	
 	$("#btnNewPost").hide();
 	$(".addanswer").hide();
-	
-	var $newwelcome = $("<p>").html("Welcome Guest<br>");
-
-	$("header .welcome").empty();
-	$("header .welcome").append($newwelcome);
 }
 
 function displayCurrentQuestions() {
-	//var curtime, futuretime, timeleft, convertedtimeleft;
 	var $display = $("<p>");
 	$.getJSON("/displayQuestions", function (questionResponse){
 		var curtime = new Date();
 		curtime = curtime.getTime();
 
 		questionResponse.forEach(function (question) {
-			//console.log("Question " + question.questionid + " expire time: " + question.expires);
 			if (question.expires > curtime) {
 				$display.append(buildQuestionDisplay(question));
 			}
@@ -68,7 +61,6 @@ function displayCurrentQuestions() {
 				$("#btnshowanswer" + question.questionid).show();
 			}
 		});
-
 	});
 }
 
@@ -90,10 +82,10 @@ function buildQuestionDisplay(question) {
 
 	//build left side
 	$leftsidediv.append($("<input />").attr({
-											type: "hidden", 
-											id: "questionid", 
-											value: question.questionid 
-											}));
+		type: "hidden", 
+		id: "questionid", 
+		value: question.questionid 
+	}));
 	$leftsidediv.append($("<h2>").html(question.title));
 	$leftsidediv.append($("<h3>").html(" Posted By: " + question.username));
 	$leftsidediv.append($("<p>").html("<br />" + question.question));
@@ -125,6 +117,37 @@ function buildAnswerDisplay(answer) {
 	return $answerdiv;
 }
 
+function newRegistration() {
+	var username, pw1, pw2, email, reginfo;
+
+	username = $("#popupform #regusername").val();
+	pw1 = $("#popupform #reg1stpassword").val();
+	pw2 = $("#popupform #reg2ndpassword").val();
+	email = $("#popupform #regemail").val();
+
+	if (username === "") {
+		alert("Username cannot be empty");
+	} else if (pw1 === "" || pw2 === "") {
+		alert("Password cannot be empty");
+	} else if (email === "") {
+		alert("Email cannot be empty");
+	} else if (pw1 !== pw2) {
+		alert("Passwords must match");
+	} else {
+		reginfo = {"username":username, "password":pw1, "email": email};
+		$.post("/registration", reginfo, function(response) {
+			if (response.registration) {
+				alert("Registration Complete, Please log in to continue");
+				$("#sss").hide();
+			}
+			else {
+				alert("Username already in use");
+			}
+		});
+
+	}
+}
+
 function newPost() {
 	var username, title, question, expire, postinfo;
 
@@ -135,11 +158,23 @@ function newPost() {
 	expire = $("#popupform input[type=radio]:checked").val();
 	postinfo = {"username":username, "title":title, "question":question, "expire": expire};
 
-	$.post("/newPost", postinfo, function(response) {
-		if (response.posted) {
-			displayCurrentQuestions();
-		}
-	});
+
+	if (postinfo.title === "") {
+		alert("Title cannot be empty");
+	} else if (postinfo.question === "") {
+		alert("Question cannot be empty");
+	} else {
+		$.post("/newPost", postinfo, function(response) {
+			if (response.posted) {
+				displayCurrentQuestions();
+				alert("Post successful");
+				$("#abc").hide();
+			}
+			else {
+				alert("Unable to post question");
+			}
+		});
+	}
 }
 
 function newAnswer() {
@@ -149,11 +184,20 @@ function newAnswer() {
 	answer = $("#popupform #answer").val();
 	postinfo = {"username": username, "questionid": questionid, "answer": answer};
 
-	$.post("/newAnswer", postinfo, function(response) {
-		if (response.posted) {
-			displayCurrentQuestions();
-		}
-	});
+	if (postinfo.answer === "") {
+		alert("Answer cannot be empty");
+	} else {
+		$.post("/newAnswer", postinfo, function(response) {
+			if (response.posted) {
+				displayCurrentQuestions();
+				alert("Post successful");
+				$("#xyz").hide();
+			}
+			else {
+				alert("Unable to add answer");
+			}
+		});
+	}
 }
 
 function timeLeft(futuretime) {
@@ -189,7 +233,7 @@ function hideAnswers(questionid) {
 
 var main = function() {
 	"use strict";
-	$("#hiddenUN").val('')
+	$("#hiddenUN").val("");
 	displayCurrentQuestions();
 
 	/* Logon and Logoff */
@@ -202,6 +246,25 @@ var main = function() {
 	});
 	/*End Logon and Logoff */
 
+	/* Registration Form */
+	$("#btnRegister").click(function() {
+		//make sure form fields are empty from previous use
+		$("#popupform #regusername").val("");
+		$("#popupform #reg1stpassword").val("");
+		$("#popupform #reg2ndpassword").val("");
+		$("#popupform #regemail").val("");
+		$("#sss").show();
+	});
+
+	$("#sss #popupform #PostSubmit").click(function() {
+		newRegistration();
+	});
+
+	$("#sss #popupform #PostCancel").click(function() {
+		$("#sss").hide();
+	});
+	/* End Registration Form */
+
 	/* New Question Form */
 	$("#btnNewPost").click(function() {
 		//make sure form fields are empty from previous use
@@ -211,7 +274,6 @@ var main = function() {
 	});
 
 	$("#abc #popupform #PostSubmit").click(function() {
-		$("#abc").hide();
 		newPost();
 	});
 
@@ -222,7 +284,6 @@ var main = function() {
 
 	/* Add Answer Form */
 	$("#xyz #popupform #PostSubmit").click(function() {
-		$("#xyz").hide();
 		newAnswer();
 	});
 
@@ -234,6 +295,6 @@ var main = function() {
 	$("#btnRefresh").click(function() {
 		displayCurrentQuestions();
 	});
-}
+};
 	
 $(document).ready(main);
